@@ -1,6 +1,6 @@
 from turtle import forward
 from flask import Flask, render_template, request
-from neuralnetwork.model import Network
+# from neuralnetwork.model import Network
 import torch
 import torch.nn.functional as F
 from torchvision import transforms
@@ -15,11 +15,13 @@ def basic_page():
 @app.route('/', methods=['POST'])
 def predict():
     comment = request.files['comment']
-    path = './uploads/' + comment.filename
-    comment.save(path)
+    print(comment.filename)
+    # path = './uploads/' + comment.filename
+    # comment.save(path)
+    # comment.seek(0)
 
-    model = Network()
-    model.load_state_dict(torch.load('./neuralnetwork/checkpoint_14.pth'))
+    # model = Network()
+    # model.load_state_dict(torch.load('./neuralnetwork/checkpoint_14.pth'))
 
 
     # Preprocessing the Comment to fit in Model
@@ -30,14 +32,16 @@ def predict():
     # img = image_tensor.view(1, 784)
     
 
-    with torch.no_grad():
-        logits = model.forward(comment)
+    # with torch.no_grad():
+    #     logits = model.forward(comment)
     
-    ps = F.softmax(logits, dim=1)
+    # ps = F.softmax(logits, dim=1)
 
-    classification = ps.argmax()
+    # classification = ps.argmax()
 
-    return render_template('index.html', prediction = classification.item())
+    # return render_template('index.html', prediction = classification.item())
+    # return f'The file was succesfully uploaded to: {path}'
+    return comment.filename
 
 if __name__ == '__main__':
     app.run("0.0.0.0", port=3000, debug=True)
