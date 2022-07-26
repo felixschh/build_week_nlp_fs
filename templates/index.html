@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Toxic-Comment-Classifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <h1 class="text-center">Toxic-Comment-Detection</h1>
+
+    <form class="p-3 text-center" action='/', method="post" enctype="multipart/form-data">
+      <input class="form-control" type="text" name="comment">
+      <input class="btn btn-primary mt-3" type="submit" value="Classify">
+    </form>
+
+    {% if prediction != NULL %}
+      <p class="text-center"> The given Comment is {{prediction}}</p>
+    {% endif %}
+
+
+  </body>
+</html>
+
