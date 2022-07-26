@@ -19,11 +19,20 @@ def predict():
     # path = './uploads/' + comment.filename
     # comment.save(path)
 
-    
 
-    model = Classifier()
+
+
+    model = Classifier(32, 300,16,16)
     # model.load_state_dict(torch.load('./neuralnetwork/checkpoint_14.pth'))
-
+    labels = []
+    with torch.no_grad():
+        comment.resize_(comment.size()[0], 32 * 300) #300 is embedding-size
+        output_test = model.forward(comment)
+        # prediction_label = torch.argmax(output_test, dim=1)
+        prediction_label = torch.sigmoid(output_test)
+        # print(prediction_label)
+        classes = prediction_label > 0.5
+        result = torch.sum(classes == labels, dim= 1) == len(labels) 
 
     # Preprocessing the Comment to fit in Model
 
