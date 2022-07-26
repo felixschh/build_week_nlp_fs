@@ -134,7 +134,7 @@ class TrainData(Dataset):
         return self.sequences[i], self.labels[i]
 
 
-train_df, test_df = train_test_split('jigsaw-toxic-comment-classification-challenge/train.csv/train.csv')
+train_df, test_df = train_test_split( )
 train_df, test_df = TrainData(train_df), TrainData(test_df)
 
 def collate_train(batch, vectorizer=train_df.vectorizer):
