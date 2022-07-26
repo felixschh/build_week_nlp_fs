@@ -14,13 +14,15 @@ def basic_page():
 
 @app.route('/', methods=['POST'])
 def predict():
-    comment = request.form['comment']
+    sub_comment = request.form['comment']
     # print(comment)
     # path = './uploads/' + comment.filename
     # comment.save(path)
 
+    # Preprocessing the Comment to fit in Model
 
 
+    comment = ''
 
     model = Classifier(32, 300,16,16)
     # model.load_state_dict(torch.load('./neuralnetwork/checkpoint_14.pth'))
@@ -34,12 +36,7 @@ def predict():
         classes = prediction_label > 0.5
         result = torch.sum(classes == labels, dim= 1) == len(labels) 
 
-    # Preprocessing the Comment to fit in Model
-
-
-
-    # return f'The file was succesfully uploaded to: {path}'
-    return comment
+    return f'The comment you submitted was classified as : {result}'
 
 if __name__ == '__main__':
     app.run("0.0.0.0", port=3000, debug=True)

@@ -27,6 +27,9 @@ def token_encoder(token, vec):
         except:
             return 0
 
+def encoder(tokens, vec):
+    return [token_encoder(token, vec) for token in tokens]
+
 def  clean_text(text):
     # text =  text.lower()
     text = re.sub(r"i'm", "i am", text)
@@ -60,5 +63,15 @@ def padding(list_of_indexes, max_seq_len, padding_index=1):
     output = list_of_indexes + (max_seq_len - len(list_of_indexes))*[padding_index]
     return output[:max_seq_len]
 
-def fit_comment():
-    return
+def fit_comment(comment:str):
+    vec = FastText('simple')
+    vec.vectors[1] = -torch.ones(vec.vectors[1].shape[0])
+    vec.vectors[0] = torch.zeros(vec.vectors[0].shape[0])
+    vectorizer = lambda x: vec.vectors[x]
+
+    sequences = [padding(encoder(preprocessing(
+            sequence), vec), 32) for sequence in comment]
+    sequences = sequences
+
+    processed_comment = sequences
+    return processed_comment
