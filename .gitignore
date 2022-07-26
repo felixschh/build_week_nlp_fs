@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vector_cache/wiki.simple.vec
+.vector_cache/wiki.simple.vec.pt
