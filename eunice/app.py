@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,7 +10,7 @@ db = SQLAlchemy(app)
 
 
 class Data(db.Model):
-    # id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     pclass = db.Column(db.String(150), nullable=False)
     sex = db.Column(db.String(150), nullable=False)
     age = db.Column(db.Integer, nullable=False)
@@ -56,6 +57,7 @@ if __name__ == '__main__':
     # parch = db.Column(db.Integer, nullable=False)
     # embark= db.Column(db.String(150), nullable=False)
     passenger = Data(pclass = 'first_class', sex = 'female', age = 20, sib = 3, parch = 2, embark = 'somewhere')
+
     db.session.add(passenger)
     db.session.commit()
 
