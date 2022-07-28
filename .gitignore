@@ -129,3 +129,9 @@ dmypy.json
 .pyre/
 .vector_cache/wiki.simple.vec
 .vector_cache/wiki.simple.vec.pt
+.vector_cache/wiki.simple.vec
+.vector_cache/wiki.simple.vec.pt
+.vector_cache/wiki.simple.vec
+.vector_cache/wiki.simple.vec.pt
+.vector_cache/wiki.simple.vec
+.vector_cache/wiki.simple.vec.pt
