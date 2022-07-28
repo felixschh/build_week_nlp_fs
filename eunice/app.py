@@ -1,65 +1,52 @@
-from asyncio.windows_events import NULL
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+import os.path
+
+
+
+db = SQLAlchemy()
+
+class Data(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    comments = db.Column(db.String(150), nullable=False)
+    toxis = db.Column(db.String(150), nullable=False)
+    severe_toxic = db.Column(db.Integer, nullable=False)
+    obscene = db.Column(db.Integer, nullable=False)
+    threat = db.Column(db.Integer, nullable=False)
+    insult= db.Column(db.String(150), nullable=False)
+
+def dataa():
+    comment = request.form.get('comment_text')
+    # sex = request.form.get('toxic')
+    # age = request.form.get('severe_toxic')
+    # sib = request.form.get('obscene')
+    # parch = request.form.get('threat')
+    # embark = request.form.get('insult')
+    # identity = request.form.get('identity_hate')
+    Dataa = Data(comments = comment)
+    db.session.add(Dataa)
+    db.session.commit()
+    # return 'sucessful'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///modeldata.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
+# This line was missing
+db.init_app(app=app)
 
-
-class Data(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    pclass = db.Column(db.String(150), nullable=False)
-    sex = db.Column(db.String(150), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    sib = db.Column(db.Integer, nullable=False)
-    parch = db.Column(db.Integer, nullable=False)
-    embark= db.Column(db.String(150), nullable=False)
-    
-
-
-
-def dataa():
-    pcl = request.form.get('Pclass')
-    sex = request.form.get('Sex')
-    age = request.form.get('Age')
-    sib = request.form.get('SibSp')
-    parch = request.form.get('Parch')
-    embark = request.form.get('Embarked')
-    Dataa = Data(pclass = pcl, sex = sex,age = age, sib = sib, parch = parch, embark = embark)
-    db.session.add(Dataa)
-    db.session.commit()
-    return 'sucessful'
+db.create_all(app=app)
 
 @app.route('/', methods=['GET','POST'])
 def home():
     if request.method == 'POST':
         dataa()
-    else:
-        return render_template('index.html')
-
-    
+    return render_template('index.html')
 
 
 
 
-
-
-if __name__ == '__main__':
-    db.create_all()
-    # create database and table including column names
-    # pclass = db.Column(db.String(150), nullable=False)
-    # sex = db.Column(db.String(150), nullable=False)
-    # age = db.Column(db.Integer, nullable=False)
-    # sib = db.Column(db.Integer, nullable=False)
-    # parch = db.Column(db.Integer, nullable=False)
-    # embark= db.Column(db.String(150), nullable=False)
-    passenger = Data(pclass = 'first_class', sex = 'female', age = 20, sib = 3, parch = 2, embark = 'somewhere')
-
-    db.session.add(passenger)
-    db.session.commit()
-
-    
-    app.run(debug=True)
+# if __name__ == '__main__':
+# #     db.init_app(app=app)
+# #     db.create_all(app=app)
+#     app.run(debug=True)
