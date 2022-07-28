@@ -23,7 +23,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.003)
 
 
 emb_dim = 300
-epochs = 5
+epochs = 100
 # print_every = 40
 train_losses, test_losses, accuracies = [], [], []
 
@@ -80,7 +80,11 @@ for e in range(epochs):
 
     print(f"Epoch: {e+1}/{epochs}, Train loss: {avg_running_loss:.4f}, Test loss: {avg_test_loss:.4f}, Accuracy: {avg_running_accuracy:.4f}" )
 
-torch.save({'model_state': model.state_dict()}, 'final_model')
+    if e % 5 == 0:
+        torch.save(model.state_dict(), f'model_states/trained_state_{e}.pt')
+        torch.save(model.state_dict(), f'model_states/trained_state_{e}.pth')
+
+
 plt.plot(train_losses, label='Train loss')
 plt.plot(test_losses, label='Test losses')
 plt.plot(accuracies, label='Accuracy')
