@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 .vector_cache/wiki.simple.vec
 .vector_cache/wiki.simple.vec.pt
+
+neuralnetwork/model_states/

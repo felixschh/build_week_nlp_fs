@@ -81,8 +81,8 @@ for e in range(epochs):
     print(f"Epoch: {e+1}/{epochs}, Train loss: {avg_running_loss:.4f}, Test loss: {avg_test_loss:.4f}, Accuracy: {avg_running_accuracy:.4f}" )
 
     if e % 5 == 0:
-        torch.save(model.state_dict(), f'model_states/trained_state_{e}.pt')
-        torch.save(model.state_dict(), f'model_states/trained_state_{e}.pth')
+        torch.save(model.state_dict(), f'/Users/felixschekerka/Desktop/build_week_nlp_fs/neuralnetwork/model_states/trained_state_{e}.pt')
+        torch.save(model.state_dict(), f'/Users/felixschekerka/Desktop/build_week_nlp_fs/neuralnetwork/model_states/trained_state_{e}.pth')
 
 
 plt.plot(train_losses, label='Train loss')

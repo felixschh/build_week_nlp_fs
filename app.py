@@ -25,7 +25,7 @@ def predict():
     comment = ''
 
     model = Classifier(32, 300,16,16)
-    # model.load_state_dict(torch.load('./neuralnetwork/checkpoint_14.pth'))
+    model.load_state_dict(torch.load('./neuralnetwork/model_states/trained_state_95.pth'))
     labels = []
     with torch.no_grad():
         comment.resize_(comment.size()[0], 32 * 300) #300 is embedding-size
