@@ -80,7 +80,7 @@ for e in range(epochs):
 
     print(f"Epoch: {e+1}/{epochs}, Train loss: {avg_running_loss:.4f}, Test loss: {avg_test_loss:.4f}, Accuracy: {avg_running_accuracy:.4f}" )
 
-torch.save({'model_state': model.state_dict()}, 'final_model')
+torch.save({'model_state': model.state_dict()}, 'toxic_model')
 plt.plot(train_losses, label='Train loss')
 plt.plot(test_losses, label='Test losses')
 plt.plot(accuracies, label='Accuracy')
