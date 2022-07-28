@@ -6,6 +6,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchtext.vocab import FastText
 import re
 import string
+from neuralnetwork.model import Classifier
 
 nlp = spacy.load("en_core_web_sm")
 fasttext = FastText("simple")
@@ -69,9 +70,7 @@ def fit_comment(comment:str):
     vec.vectors[0] = torch.zeros(vec.vectors[0].shape[0])
     vectorizer = lambda x: vec.vectors[x]
 
-    sequences = [padding(encoder(preprocessing(
-            sequence), vec), 32) for sequence in comment]
-    sequences = sequences
+    sequences = padding(encoder(preprocessing(comment), FastText('simple')), 32)
+    output = torch.stack([vectorizer(token) for token in sequences])
 
-    processed_comment = sequences
-    return processed_comment
+    return output
