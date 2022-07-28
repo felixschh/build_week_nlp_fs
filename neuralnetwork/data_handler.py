@@ -64,7 +64,7 @@ def padding(list_of_indexes, max_seq_len, padding_index=1):
     return output[:max_seq_len]
 
 
-df = load_data('jigsaw-toxic-comment-classification-challenge/train.csv/train.csv')
+df = load_data('/Users/felixschekerka/Desktop/build_week_nlp_fs/jigsaw-toxic-comment-classification-challenge/train.csv/train.csv')
 # print(df.head())
 train_df, test_df = train_test_split(df)
 # print(len(train_df), len(test_df))
@@ -102,7 +102,7 @@ def  clean_text(text):
 # print(data)
 
 df['comment_text'] = df['comment_text'].apply(lambda x:clean_text(x))
-print(df)
+# print(df)
 
 
 
@@ -134,7 +134,7 @@ class TrainData(Dataset):
         return self.sequences[i], self.labels[i]
 
 
-train_df, test_df = train_test_split( )
+train_df, test_df = train_test_split(df)
 train_df, test_df = TrainData(train_df), TrainData(test_df)
 
 def collate_train(batch, vectorizer=train_df.vectorizer):
