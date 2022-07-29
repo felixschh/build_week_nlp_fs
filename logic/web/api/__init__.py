@@ -8,7 +8,6 @@ app.config.from_object("api.config.Config")
 db = SQLAlchemy(app)
 
 class Comment(db.Model):
-
     __tablename__ = 'submitted_comments'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     comment = db.Column(db.String(256), unique=True, nullable=False)

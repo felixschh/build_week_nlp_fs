@@ -3,9 +3,34 @@ from neuralnetwork.model import Classifier
 import torch
 import torch.nn.functional as F
 from utils.preproccesing import clean_text, fit_comment
-
+from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
+db = SQLAlchemy()
+# app.config.from_object("logic.web.api.config.Config")
+# SQLALCHEMY_TRACK_MODIFICATIONS = False
+# # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite://')
+# SQLALCHEMY_DATABASE_URI = 'sqlite://toxicity.sqlite'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///toxicity.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+# db.init_app(app=app)
+# db.create_all(app=app)
+
+class Comment(db.Model):
+    __tablename__ = 'submitted_comments'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    comment = db.Column(db.String(256), unique=True, nullable=False)
+    class_toxic = db.Column(db.Integer, unique=False, nullable=True)
+
+db.init_app(app=app)
+db.create_all(app=app)
+    # def __init__(self, comment, class_toxic):
+
+    #     self.comment = comment
+    #     self.class_toxic = class_toxic
 
 @app.route('/', methods=['GET'])
 def basic_page():
@@ -34,9 +59,14 @@ def predict():
         pred = pred.argmax(axis=1)
 
         pred = labels[int(pred[-1])]
+    
+    submitted_comment = Comment(comment=sub_comment, class_toxic=pred)
+    db.session.add(submitted_comment)
+    db.session.commit()
 
     return render_template('index.html', prediction = pred)
 
 
 if __name__ == '__main__':
-    app.run("0.0.0.0", port=3000, debug=True)
+    # app.run("0.0.0.0", port=3000, debug=True)
+    app.run(port=3000, debug=True)
