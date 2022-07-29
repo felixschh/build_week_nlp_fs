@@ -1,4 +1,3 @@
-from enum import unique
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 from flask_sqlalchemy import SQLAlchemy
@@ -8,19 +7,19 @@ api = Api(app)
 app.config.from_object("api.config.Config")
 db = SQLAlchemy(app)
 
-class Striver(db.Model):
+class Comment(db.Model):
 
-    __tablename__ = 'strivers'
+    __tablename__ = 'submitted_comments'
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    email = db.Column(db.String(64), unique=True, nullable=False)
-    name = db.Column(db.String(64), unique=False, nullable=True)
+    comment = db.Column(db.String(256), unique=True, nullable=False)
+    class_toxic = db.Column(db.Integer, unique=False, nullable=True)
 
-    def __init__(self, email, name=""):
+    def __init__(self, comment, class_toxic):
 
-        self.email = email
-        self.name = name
+        self.comment = comment
+        self.class_toxic = class_toxic
 
-class Striver_api(Resource):
+class Comment_api(Resource):
 
     def get(self):
 
@@ -28,13 +27,13 @@ class Striver_api(Resource):
         # args_parser.add_argument('email', type= str)
 
         # args = args_parser.parse_args()
-        email_= request.args['email']
+        comment_= request.args['comment']
         try:
-            striver_info = db.session.query(Striver).filter_by(email=email_).first()
-            return {'Name': striver_info.name, "Email": striver_info.email}
+            comment_info = db.session.query(Comment).filter_by(comment=comment_).first()
+            return {'Comment': comment_info.name, "Class": comment_info.email}
         
         except:
-            return {'ERROR': "Coulden't find email"}
+            return {'ERROR': "Coulden't find the Comment"}
 
         
 
@@ -46,14 +45,14 @@ class Striver_api(Resource):
 
         # args = args_parser.parse_args()
         
-        email_= request.form['email']
-        name_ = request.form['name']
+        comment_= request.form['comment']
+        class_toxic_ = request.form['class_toxic']
         try:
-            db.session.add(Striver(email=email_, name=name_))
+            db.session.add(Comment(comment=comment_, class_toxic=class_toxic_))
             db.session.commit()
-            return {'email': email_, 'name': name_}
+            return {'Comment': comment_, 'Class': class_toxic_}
         except Exception as exp:
             print(exp)
             return {'ERROR': "Couldn't insert email"}
 
-api.add_resource(Striver_api, '/striver')
+api.add_resource(Comment_api, '/comment')

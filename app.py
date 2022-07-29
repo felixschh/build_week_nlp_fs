@@ -1,10 +1,8 @@
-from turtle import forward
 from flask import Flask, render_template, request
 from neuralnetwork.model import Classifier
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-from utils.preproccesing import preprocessing, token_encoder, clean_text, padding, fit_comment
+from utils.preproccesing import clean_text, fit_comment
 
 
 app = Flask(__name__)
