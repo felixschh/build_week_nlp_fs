@@ -30,10 +30,10 @@ class Comment_api(Resource):
         comment_= request.args['comment']
         try:
             comment_info = db.session.query(Comment).filter_by(comment=comment_).first()
-            return {'Comment': comment_info.name, "Class": comment_info.email}
+            return {'Comment': comment_info.comment, "Class": comment_info.class_toxic}
         
         except:
-            return {'ERROR': "Coulden't find the Comment"}
+            return {'ERROR': "Couldn't find the Comment"}
 
         
 
@@ -53,6 +53,6 @@ class Comment_api(Resource):
             return {'Comment': comment_, 'Class': class_toxic_}
         except Exception as exp:
             print(exp)
-            return {'ERROR': "Couldn't insert email"}
+            return {'ERROR': "Couldn't submit the Comment"}
 
 api.add_resource(Comment_api, '/comment')
