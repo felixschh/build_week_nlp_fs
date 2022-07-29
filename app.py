@@ -4,7 +4,6 @@ import torch
 import torch.nn.functional as F
 from utils.preproccesing import clean_text, fit_comment
 from flask_sqlalchemy import SQLAlchemy
-import os
 
 app = Flask(__name__)
 db = SQLAlchemy()
