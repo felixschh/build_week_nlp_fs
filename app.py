@@ -8,16 +8,9 @@ import os
 
 app = Flask(__name__)
 db = SQLAlchemy()
-# app.config.from_object("logic.web.api.config.Config")
-# SQLALCHEMY_TRACK_MODIFICATIONS = False
-# # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite://')
-# SQLALCHEMY_DATABASE_URI = 'sqlite://toxicity.sqlite'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///toxicity.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
-# db.init_app(app=app)
-# db.create_all(app=app)
 
 class Comment(db.Model):
     __tablename__ = 'submitted_comments'
@@ -27,10 +20,6 @@ class Comment(db.Model):
 
 db.init_app(app=app)
 db.create_all(app=app)
-    # def __init__(self, comment, class_toxic):
-
-    #     self.comment = comment
-    #     self.class_toxic = class_toxic
 
 @app.route('/', methods=['GET'])
 def basic_page():
@@ -68,5 +57,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    # app.run("0.0.0.0", port=3000, debug=True)
     app.run(port=3000, debug=True)
