@@ -7,7 +7,7 @@ from torch import optim
 # sys.path.insert(0, 'C:/Users/asus/Documents/GitHub/toxic_behavior/model1.py')
 from model import Classifier
 
-from data_handler import test_loader, train_loader
+from data_clean import test_loader, train_loader
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -23,7 +23,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.003)
 
 
 emb_dim = 300
-epochs = 5
+epochs = 20
 # print_every = 40
 train_losses, test_losses, accuracies = [], [], []
 
@@ -80,7 +80,7 @@ for e in range(epochs):
 
     print(f"Epoch: {e+1}/{epochs}, Train loss: {avg_running_loss:.4f}, Test loss: {avg_test_loss:.4f}, Accuracy: {avg_running_accuracy:.4f}" )
 
-torch.save({'model_state': model.state_dict()}, 'toxic_model')
+torch.save({'model_state': model.state_dict()}, 'toxic_model1')
 plt.plot(train_losses, label='Train loss')
 plt.plot(test_losses, label='Test losses')
 plt.plot(accuracies, label='Accuracy')
